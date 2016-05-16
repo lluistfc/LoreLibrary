@@ -1,0 +1,15 @@
+## Interface: 60100
+
+## Notes: Records the contents of in-game books so you can read them later.
+
+## Author: Phanx
+## X-Email: addons@phanx.net
+## X-Copyright: Copyright (c) 2013-2015 Phanx. All rights reserved.
+## X-Webiste: https://github.com/Phanx/Bibliophile
+## Name: LoreLibrary
+## SavedVariables: BibliophileDB
+
+embeds.xml
+Locales\Locales.xml
+Collect.lua
+Core.lua
