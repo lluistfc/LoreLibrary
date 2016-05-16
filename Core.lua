@@ -18,24 +18,6 @@ LoreLibrary = LibStub("AceAddon-3.0"):NewAddon("LoreLibrary", "AceConsole-3.0")
 -- LoreLibrary FUNCTIONS
 --------------------------------------------------------------------------------
 
-function LoreLibrary:createReadingPanel(bookTitle, bookData)
-    local frame = AceGUI:Create("Frame")
-    frame:SetTitle(bookTitle)
-    local bookText = ""
-    for k, page in pairs(bookData["pages"]) do
-        bookText = bookText .. page .. "\n\n"
-    end
-    local longText = AceGUI:Create("MultiLineEditBox")
-    longText:SetText(bookText)
-    longText:SetDisabled()
-    longText:SetMaxLetters(0)
-    longText:SetFullWidth(true)
-    longText:SetFullHeight(true)
-    longText:SetNumLines(50)
-    frame:AddChild(longText)
-    frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
-end
-
 function LoreLibrary:LoreLibraryMainFrame(input)
     local frame = AceGUI:Create("Frame")
     frame:SetTitle('Lore Library')
@@ -43,7 +25,26 @@ function LoreLibrary:LoreLibraryMainFrame(input)
         local button = AceGUI:Create("Button")
         button:SetText(bookTitle)
         button:SetWidth(200)
-        button:SetCallback("OnClick", self:createReadingPanel(bookTitle, bookData))
+        button:SetCallback("OnClick", function()
+            local bookFrame = AceGUI:Create("Frame")
+            bookFrame:SetTitle(bookTitle)
+            local bookText = ""
+            local pageLength = table.getn(bookData["pages"])
+            for k, page in pairs(bookData["pages"]) do
+                if (type(k)=='number') then
+                    bookText = bookText .. page .. "\n\n"
+                end
+            end
+            local longText = AceGUI:Create("MultiLineEditBox")
+            longText:SetText(bookText)
+            longText:SetDisabled()
+            longText:SetMaxLetters(0)
+            longText:SetFullWidth(true)
+            longText:SetHeight(50)
+            longText:SetNumLines(25)
+            bookFrame:AddChild(longText)
+            bookFrame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
+        end)
         frame:AddChild(button)
     end
     frame:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
